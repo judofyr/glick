@@ -1,3 +1,5 @@
+# coding: utf-8
+
 class Glick
   include Math
 
@@ -23,6 +25,10 @@ class Glick
 
     def pretty_rd
       rd * DIFF
+    end
+
+    def inspect
+      "#<Glick::Player #{pretty_r.to_i} ± #{pretty_rd.to_i * 2}>"
     end
   end
 
