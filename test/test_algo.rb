@@ -6,23 +6,23 @@ class MiniTest::Unit::TestCase
   end
 
   def test_example
-    p1 = Glick::Player.from_pretty(1500, 200)
-    p2 = Glick::Player.from_pretty(1400, 30)
-    p3 = Glick::Player.from_pretty(1550, 100)
-    p4 = Glick::Player.from_pretty(1700, 300)
+    p1 = Glick::Player.new(1500, 200)
+    p2 = Glick::Player.new(1400, 30)
+    p3 = Glick::Player.new(1550, 100)
+    p4 = Glick::Player.new(1700, 300)
     o = [p2, p3, p4]
     scores = [[p2, 1], [p3, 0], [p4, 0]]
 
-    assert_equal 0, p1.r
-    assert_in_delta 1.1513, p1.rd
+    assert_equal 0, p1._r
+    assert_in_delta 1.1513, p1._rd
 
     assert_in_delta 1.7785, @g.v(p1, o)
 
     assert_in_delta -0.4834, @g.delta(p1, scores)
 
     pl = @g.compute(p1, scores)
-    assert_equal 1464, pl.pretty_r.to_i
-    assert_equal 151, pl.pretty_rd.to_i
+    assert_equal 1464, pl.r.to_i
+    assert_equal 151, pl.rd.to_i
   end
 
   def test_round
@@ -38,9 +38,9 @@ class MiniTest::Unit::TestCase
 
     r.compute
 
-    a = r.results[:a]
-    assert_equal 1464, a.pretty_r.to_i
-    assert_equal 151, a.pretty_rd.to_i
+    r, rd, vol = *r.results[:a]
+    assert_equal 1464, r.to_i
+    assert_equal 151, rd.to_i
   end
 end
 

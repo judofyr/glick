@@ -3,32 +3,41 @@
 class Glick
   include Math
 
-  Player = Struct.new(:r, :rd, :vol) do
+  class Player
     DIFF = 173.7178
     BASE = 1500
 
-    def self.initial
-      from_pretty(BASE, 350)
+    attr_reader :_r, :_rd, :vol
+
+    def initialize(r = BASE, rd = 350, vol = 0.06)
+      @_r = (r - BASE)/DIFF
+      @_rd = rd/DIFF
+      @vol = vol
     end
 
-    def self.from_pretty(r, rd, vol = 0.06)
-      new((r - BASE)/DIFF, rd/DIFF, vol)
+    def self._new(r, rd, vol)
+      allocate.instance_eval do
+        @_r = r
+        @_rd = rd
+        @vol = vol
+        self
+      end
     end
 
-    def to_pretty
-      [pretty_r, pretty_rd, vol]
+    def to_a
+      [r, rd, vol]
     end
 
-    def pretty_r
-      r * DIFF + BASE
+    def r
+      _r * DIFF + BASE
     end
 
-    def pretty_rd
-      rd * DIFF
+    def rd
+      _rd * DIFF
     end
 
     def inspect
-      "#<Glick::Player #{pretty_r.to_i} ± #{pretty_rd.to_i * 2}>"
+      "#<Glick::Player #{r.to_i} ± #{rd.to_i * 2}>"
     end
   end
 
@@ -59,17 +68,17 @@ class Glick
   end
 
   def g(v)
-    1/sqrt(1+(3*v.rd**2)/(PI**2))
+    1/sqrt(1+(3*v._rd**2)/(PI**2))
   end
 
   def e(p1, p2)
-    1/(1+exp(-g(p2) * (p1.r - p2.r)))
+    1/(1+exp(-g(p2) * (p1._r - p2._r)))
   end
 
   def compute(player, scores)
     if scores.empty?
-      new_rd = sqrt(player.rd ** 2 + player.vol ** 2)
-      return Player.new(player.r, new_rd, player.vol)
+      new_rd = sqrt(player._rd ** 2 + player.vol ** 2)
+      return Player._new(player._r, new_rd, player.vol)
     end
 
     score = score(player, scores)
@@ -77,7 +86,7 @@ class Glick
     delta = v * score
 
     a = oa = log(player.vol ** 2)
-    rd = player.rd
+    rd = player._rd
     goal = 0.000001
 
     f = proc do |x|
@@ -118,9 +127,9 @@ class Glick
     pre_rd = sqrt(rd ** 2 + new_vol ** 2)
 
     new_rd = 1/sqrt(1/pre_rd**2 + 1/v)
-    new_r = player.r + new_rd**2 * score
+    new_r = player._r + new_rd**2 * score
 
-    Player.new(new_r, new_rd, new_vol)
+    Player._new(new_r, new_rd, new_vol)
   end
 
   class Round
@@ -133,8 +142,8 @@ class Glick
       @results = {}
     end
 
-    def add_player(id, r, rd, vol = 0.06)
-      @players[id] = Player.from_pretty(r, rd, vol)
+    def add_player(id, *args)
+      @players[id] = Player.new(*args) 
     end
 
     def add_score(a, b, score = 1)
