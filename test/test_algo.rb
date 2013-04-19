@@ -21,8 +21,8 @@ class MiniTest::Unit::TestCase
     assert_in_delta -0.4834, @g.delta(p1, scores)
 
     pl = @g.compute(p1, scores)
-    assert_equal 1464, pl.r.to_i
-    assert_equal 151, pl.rd.to_i
+    assert_equal 1464, pl.r
+    assert_equal 151, pl.rd
   end
 
   def test_round
@@ -39,8 +39,8 @@ class MiniTest::Unit::TestCase
     r.compute
 
     r, rd, vol = *r.results[:a]
-    assert_equal 1464, r.to_i
-    assert_equal 151, rd.to_i
+    assert_equal 1464, r
+    assert_equal 151, rd
   end
 end
 
