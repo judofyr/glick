@@ -29,15 +29,15 @@ class Glick
     end
 
     def r
-      (_r * DIFF + BASE).to_i
+      _r * DIFF + BASE
     end
 
     def rd
-      (_rd * DIFF).to_i
+      _rd * DIFF
     end
 
     def inspect
-      "#<Glick::Player #{r} ± #{rd * 2}>"
+      "#<Glick::Player %.2f ± %%.2f>" % [r, rd * 2]
     end
   end
 
