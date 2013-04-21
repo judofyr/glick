@@ -4,7 +4,7 @@ require "glick"
 
 Gem::Specification.new do |s|
   s.name     = "glick"
-  s.version  = Glick::VERSION
+  s.version  = Glick::VERSION.dup
   s.date     = "2013-04-21"
   s.summary  = "Glicko-2"
   s.email    = "judofyr@gmail.com"
