@@ -144,8 +144,8 @@ class Glick
       @results = {}
     end
 
-    def add_player(id, *args)
-      @players[id] = Player.new(*args) 
+    def add_player(id, player)
+      @players[id] = player
     end
 
     def add_score(a, b, score = 1)

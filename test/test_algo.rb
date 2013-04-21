@@ -27,10 +27,10 @@ class MiniTest::Unit::TestCase
 
   def test_round
     r = Glick::Round.new(@g)
-    r.add_player(:a, 1500, 200, 0.06)
-    r.add_player(:b, 1400, 30, 0.06)
-    r.add_player(:c, 1550, 100, 0.06)
-    r.add_player(:d, 1700, 300, 0.06)
+    r.add_player(:a, Glick::Player.new(1500, 200, 0.06))
+    r.add_player(:b, Glick::Player.new(1400, 30, 0.06))
+    r.add_player(:c, Glick::Player.new(1550, 100, 0.06))
+    r.add_player(:d, Glick::Player.new(1700, 300, 0.06))
 
     r.add_score(:a, :b)
     r.add_score(:c, :a)
