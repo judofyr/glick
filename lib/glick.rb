@@ -1,6 +1,8 @@
 # coding: utf-8
 
 class Glick
+  VERSION = "0.5.0".freeze
+
   include Math
 
   class Player
