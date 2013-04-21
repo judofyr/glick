@@ -39,7 +39,7 @@ class Glick
     end
 
     def inspect
-      "#<Glick::Player %.2f ± %%.2f>" % [r, rd * 2]
+      "#<Glick::Player %.2f ± %.2f>" % [r, rd * 2]
     end
   end
 
