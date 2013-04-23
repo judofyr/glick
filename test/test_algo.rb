@@ -42,5 +42,18 @@ class MiniTest::Unit::TestCase
     assert_equal 1464, r.to_i
     assert_equal 151, rd.to_i
   end
+
+  def test_missing_player
+    r = Glick::Round.new(@g)
+    r.add_player(:a, Glick::Player.new(1500, 200, 0.06))
+
+    assert_raises(Glick::GlickError) do
+      r.add_score(:b, :a)
+    end
+
+    assert_raises(Glick::GlickError) do
+      r.add_score(:a, :b)
+    end
+  end
 end
 

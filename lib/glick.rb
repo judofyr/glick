@@ -3,6 +3,8 @@
 class Glick
   VERSION = "0.5.0".freeze
 
+  class GlickError < StandardError; end
+
   include Math
 
   class Player
@@ -149,6 +151,9 @@ class Glick
     end
 
     def add_score(a, b, score = 1)
+      raise GlickError, "Unknown player: #{a.inspect}" unless @players[a]
+      raise GlickError, "Unknown player: #{b.inspect}" unless @players[b]
+
       @scores[a] << [@players[b], (    score)]
       @scores[b] << [@players[a], (1 - score)]
     end
