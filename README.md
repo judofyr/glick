@@ -18,3 +18,20 @@ pl.r  # => 1464
 pl.rd # => 151
 ```
 
+## Using a Route object
+
+```ruby
+g = Glick.new
+round = Glick::Round.new(g)
+round.add_player(1, Glick::Player.new)
+round.add_player(2, Glick::Player.new)
+
+# Player 1 won against player 2
+round.add_score(1, 2, 1)
+
+round.compute
+
+round.results[1] # => New player object
+round.results[2] # => New player object
+```
+
