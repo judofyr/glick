@@ -18,7 +18,7 @@ pl.r  # => 1464
 pl.rd # => 151
 ```
 
-## Using a Route object
+## Using a Round object
 
 ```ruby
 g = Glick.new
